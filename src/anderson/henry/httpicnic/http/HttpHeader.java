@@ -115,7 +115,6 @@ public enum HttpHeader {
 	
 	public String getText() {
 		return this.text;
-		
 	}
 	
 	public static HttpHeader get(String name) {

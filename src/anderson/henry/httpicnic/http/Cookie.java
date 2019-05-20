@@ -1,5 +1,8 @@
 package anderson.henry.httpicnic.http;
 
+/**
+ * Represents an HTTP cookie
+ */
 public class Cookie {
 	private String raw;
 	private String name;
@@ -12,10 +15,18 @@ public class Cookie {
 	private boolean secure;
 	private boolean httpOnly;
 	
+	/**
+	 * @param name The name of the cookie
+	 * @param value The value of the cookie
+	 */
 	public Cookie(String name, String value) {
 		this.name = name;
 		this.value = value;
 	}
+	
+	/**
+	 * @param raw The raw, unparsed cookie
+	 */
 	public Cookie(String raw) {
 		this.raw = raw;
 		String[] fields = raw.split("\\s*;\\s*");
@@ -50,58 +61,92 @@ public class Cookie {
 				
 			}
 		}
-		/* System.out.println("Name: " + this.name);
-		System.out.println("Value: " + this.value);
-		System.out.println("Secure: " + this.secure);
-		System.out.println("Http Only: " + this.httpOnly);
-		System.out.println("Expires: " + this.expires);
-		System.out.println("Max-Age: " + this.maxAge);
-		System.out.println("Domain: " + this.domain);
-		System.out.println("Path: " + this.path);
-		System.out.println("Same Site: " + this.sameSite);
-		System.out.println(); */
 	}
 	
+	/**
+	 * Returns the raw, unparsed form of the cookie
+	 * @return Returns a String
+	 */
 	public String getRawCookie() {
 		return this.raw;
 	}
 	
+	/**
+	 * Returns the name of the cookie
+	 * @return Returns a String
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
+	/**
+	 * Returns the value of the cookie
+	 * @return Returns a String
+	 */
 	public String getValue() {
 		return this.value;
 	}
 	
+	/**
+	 * Sets the value of the cookie
+	 * @param value The value of the cookie
+	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
 	
+	/**
+	 * Returns whether the cookie is secure
+	 * @return Returns a boolean
+	 */
 	public boolean isSecure() {
 		return this.secure;
 	}
 	
+	/**
+	 * Returns whether the cookie is http only
+	 * @return Returns a boolean
+	 */
 	public boolean isHttpOnly() {
 		return this.httpOnly;
 	}
 	
+	/**
+	 * Returns the expiration date of the cookie
+	 * @return Returns a String
+	 */
 	public String getExpires() {
 		return this.expires;
 	}
 
+	/**
+	 * Returns the maximum age of the cookie
+	 * @return Returns an int
+	 */
 	public int getMaxAge() {
 		return this.maxAge;
 	}
 	
+	/**
+	 * Returns the domain of the cookie
+	 * @return Returns a String
+	 */
 	public String getDomain() {
 		return this.domain;
 	}
 	
+	/**
+	 * Returns the path of the cookie
+	 * @return Returns a boolean
+	 */
 	public String getPath() {
 		return this.path;
 	}
 	
+	/**
+	 * Returns the same site attribute of the cookie
+	 * @return Returns a String
+	 */
 	public String getSameSite() {
 		return this.sameSite;
 	}
