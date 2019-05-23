@@ -1,9 +1,15 @@
-package anderson.henry.githublogin;
+package anderson.henry.httppicnic.examples.githublogin;
 
 import anderson.henry.httpicnic.PicnicClient;
 import anderson.henry.httpicnic.http.HttpHeader;
 import anderson.henry.httpicnic.http.HttpResponse;
 
+/**
+ * This class represents an account on https://github.com
+ * It allows you to programmatically sign into GitHub
+ * This class uses HTTPicnic to handle HTTP requests
+ * @author Henry Anderson
+ */
 public class GitHubAccount {
 	private PicnicClient client;
 	private String username;
