@@ -1,9 +1,9 @@
-package anderson.henry.httppicnic.examples.github;
+package org.henrya.httpicnic.examples.github;
 
-import anderson.henry.httpicnic.PicnicClient;
-import anderson.henry.httpicnic.http.HttpConnectionException;
-import anderson.henry.httpicnic.http.HttpHeader;
-import anderson.henry.httpicnic.http.HttpResponse;
+import org.henrya.httpicnic.PicnicClient;
+import org.henrya.httpicnic.http.HttpConnectionException;
+import org.henrya.httpicnic.http.HttpHeader;
+import org.henrya.httpicnic.http.HttpResponse;
 
 /**
  * This class represents an account on https://github.com

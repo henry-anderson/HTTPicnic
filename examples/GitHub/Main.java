@@ -1,6 +1,6 @@
-package anderson.henry.httppicnic.examples.github;
+package org.henrya.httpicnic.examples.github;
 
-import anderson.henry.httpicnic.http.HttpConnectionException;
+import org.henrya.httpicnic.http.HttpConnectionException;
 
 public class Main {
 	
