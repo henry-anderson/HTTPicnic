@@ -1,5 +1,9 @@
 package anderson.henry.httpicnic.http;
 
+/**
+ * Represents an HTTP header field
+ * @author Henry Anderson
+ */
 public enum HttpHeader {
 
 	/* Standard Request Headers */
@@ -113,10 +117,19 @@ public enum HttpHeader {
 		this.text = text;
 	}
 	
+	/**
+	 * Returns the String equivalent of the enum
+	 * @return The text equivalent
+	 */
 	public String getText() {
 		return this.text;
 	}
 	
+	/**
+	 * Returns the HttpHeader representation of the header field
+	 * @param name The name of the header field
+	 * @return The HttpHeader
+	 */
 	public static HttpHeader get(String name) {
 		for(HttpHeader field : HttpHeader.values()) {
 			if(field.getText() != null && field.getText().equalsIgnoreCase(name)) {

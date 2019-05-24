@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Represents an HTTP response
+ * @author Henry Anderson
+ */
 public class HttpResponse {
 	private Map<String, String> headers;
 	private List<Cookie> cookies;
@@ -12,6 +16,14 @@ public class HttpResponse {
 	private int statusCode;
 	private String statusMessage;
 	
+	/**
+	 * Constructs a new HttpResponse
+	 * @param headers The reponse headers
+	 * @param cookies The response cookies
+	 * @param content The content of the response
+	 * @param statusCode The response status code
+	 * @param statusMessage The response status message
+	 */
 	public HttpResponse(Map<String, String> headers, List<Cookie> cookies, String content, int statusCode, String statusMessage) {
 		this.headers = headers;
 		this.content = content;

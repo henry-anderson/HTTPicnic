@@ -1,22 +1,18 @@
 package anderson.henry.httpicnic.http;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import anderson.henry.httpicnic.utils.PicnicUtils;
+
 /**
  * A class for sending HTTP requests
+ * @author Henry Anderson
  */
-public class HttpRequest {
+public abstract class HttpRequest {
 	private String url;
-	private UserAgent userAgent;
 	private Map<String, String> headers = new HashMap<String, String>();
 	private Map<String, String> parameters = new HashMap<String, String>();
 	private List<Cookie> cookies = new ArrayList<Cookie>();
@@ -28,114 +24,98 @@ public class HttpRequest {
 		this.url = url;
 	}
 	
-	private HttpResponse send(String method, Map<String, String> headers, Map<String, String> parameters, List<Cookie> cookies) {
-		try {
-			switch(method) {
-				case "POST": {
-					URL urlObj = new URL(this.url);
-					HttpURLConnection conn = this.prepareURL(urlObj, headers, cookies);
-					conn.setRequestMethod("POST");
-					if(parameters != null && !parameters.isEmpty()) {
-						String urlParameters = HttpUtils.parseParameters(parameters);
-						conn.setDoOutput(true);
-						DataOutputStream output = new DataOutputStream(conn.getOutputStream());
-						output.writeBytes(urlParameters);
-						output.flush();
-						output.close();
-					}
-					return new HttpResponse(HttpUtils.parseHeaders(conn.getHeaderFields()), HttpUtils.parseCookies(conn.getHeaderFields()), HttpUtils.parseContent(new BufferedReader(new InputStreamReader(conn.getInputStream()))), conn.getResponseCode(), conn.getResponseMessage());
-				}
-				case "GET": {
-					URL urlObj = new URL(this.url + "?" + HttpUtils.parseParameters(parameters));
-					HttpURLConnection conn = this.prepareURL(urlObj, headers, cookies);
-					conn.setRequestMethod("GET");
-					return new HttpResponse(HttpUtils.parseHeaders(conn.getHeaderFields()), HttpUtils.parseCookies(conn.getHeaderFields()), HttpUtils.parseContent(new BufferedReader(new InputStreamReader(conn.getInputStream()))), conn.getResponseCode(), conn.getResponseMessage());
-				}
-				case "HEAD": {
-					URL urlObj = new URL(this.url + "?" + HttpUtils.parseParameters(parameters));
-					HttpURLConnection conn = this.prepareURL(urlObj, headers, cookies);
-					conn.setRequestMethod("HEAD");
-					return new HttpResponse(HttpUtils.parseHeaders(conn.getHeaderFields()), HttpUtils.parseCookies(conn.getHeaderFields()), null, conn.getResponseCode(), conn.getResponseMessage());
-				}
-			}
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	/**
+	 * Sends the HTTP request using new headers, new parameters, and new cookies
+	 * @param headers The headers
+	 * @param rawParams A String with the raw, unparsed parameters 
+	 * @param rawCookies A String with the raw, unparsed cookies
+	 * @return An HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
+	 */
+	public abstract HttpResponse sendRaw(Map<String, String> headers, String rawParams, String rawCookies) throws HttpConnectionException;
 	
-	private HttpURLConnection prepareURL(URL urlObj, Map<String, String> headers, List<Cookie> cookies) throws IOException {
-		HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-		if(this.userAgent != null) {
-			conn.setRequestProperty(HttpHeader.USER_AGENT.getText(), this.userAgent.getText());
-		}
-		if(cookies != null && !cookies.isEmpty()) {
-			String rawCookies = HttpUtils.toRawCookies(cookies);
-			conn.setRequestProperty(HttpHeader.COOKIE.getText(), rawCookies);
-		}
-		
-		for(String field : headers.keySet()) {
-			conn.setRequestProperty(field, headers.get(field));
-		}
-		return conn;
+	/**
+	 * Sends the HTTP request using new headers, new parameters, and new cookies
+	 * @param headers The headers
+	 * @param rawParams The parameters
+	 * @param rawCookies The cookies
+	 * @return An HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
+	 */
+	public HttpResponse send(Map<String, String> headers, Map<String, String> parameters, List<Cookie> cookies) throws HttpConnectionException {
+		return this.sendRaw(headers, PicnicUtils.toRawParameters(parameters), PicnicUtils.toRawCookies(cookies));
 	}
 	
 	/**
-	 * Sends a POST request using the current headers, parameters, and cookies
-	 * @param headers The headers to send
-	 * @param parameters The parameters to send
-	 * @param cookies The cookies to send
-	 * @return Returns a HttpResponse instance
+	 * Sends the HTTP request
+	 * @return An HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
 	 */
-	public HttpResponse sendPOST(Map<String, String> headers, Map<String, String> parameters, List<Cookie> cookies) {
-		return this.send("POST", headers, parameters, cookies);
+	public HttpResponse send() throws HttpConnectionException{
+		return this.sendRaw(this.getHeaders(), PicnicUtils.toRawParameters(this.getParameters()), PicnicUtils.toRawCookies(this.getCookies()));
 	}
 	
 	/**
-	 * Sends a POST request using the current headers, parameters, and cookies
-	 * @return Returns a HttpResponse instance
+	 * Sends the HTTP request with new, unparsed parameters and cookies
+	 * @param rawParams The raw, unparsed parameters
+	 * @param rawCookies The raw, unparsed cookies
+	 * @return An HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
 	 */
-	public HttpResponse sendPOST() {
-		return this.send("POST", this.headers, this.parameters, this.cookies);
+	public HttpResponse sendRaw(String rawParams, String rawCookies) throws HttpConnectionException {
+		return this.sendRaw(this.getHeaders(), rawParams, rawCookies);
 	}
 	
 	/**
-	 * Sends a GET request using the current headers, parameters, and cookies
-	 * @param headers The headers to send
-	 * @param parameters The parameters to send
-	 * @param cookies The cookies to send
-	 * @return Returns a HttpResponse instance
+	 * Sends the HTTP request with new, unparsed parameters
+	 * @param rawParams The raw, unparsed parameters
+	 * @return An HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
 	 */
-	public HttpResponse sendGET(Map<String, String> headers, Map<String, String> parameters, List<Cookie> cookies) {
-		return this.send("GET", headers, parameters, cookies);
+	public HttpResponse sendRawParams(String rawParams) throws HttpConnectionException {
+		return this.sendRaw(this.getHeaders(), rawParams, PicnicUtils.toRawCookies(this.getCookies()));
 	}
 	
 	/**
-	 * Sends a GET request using the current headers, parameters, and cookies
-	 * @return Returns a HttpResponse instance
+	 * Sends the HTTP request with new, unparsed cookies
+	 * @param rawCookies The raw, unparsed cookies
+	 * @return An HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
 	 */
-	public HttpResponse sendGET() {
-		return this.send("GET", this.headers, this.parameters, this.cookies);
+	public HttpResponse sendRawCookies(String rawCookies) throws HttpConnectionException {
+		return this.sendRaw(this.getHeaders(), PicnicUtils.toRawParameters(this.getParameters()), rawCookies);
 	}
 	
 	/**
-	 * Sends a HEAD request using the current headers, parameters, and cookies
-	 * @param headers The headers to send
-	 * @param parameters The parameters to send
-	 * @param cookies The cookies to send
-	 * @return Returns a HttpResponse instance
+	 * Returns the URL that the request will be sent to
+	 * @return The URL
 	 */
-	public HttpResponse sendHEAD(Map<String, String> headers, Map<String, String> parameters, List<Cookie> cookies) {
-		return this.send("HEAD", headers, parameters, cookies);
+	public String getURL() {
+		return this.url;
 	}
 	
 	/**
-	 * Sends a HEAD request using the current headers, parameters, and cookies
-	 * @return Returns a HttpResponse instance
+	 *  Sets the URL that the request will be sent to
+	 *  @param url The URL
 	 */
-	public HttpResponse sendHEAD() {
-		return this.send("HEAD", this.headers, this.parameters, this.cookies);
+	public void setURL(String url) {
+		this.url = url;
+	}
+	
+	/**
+	 * Returns the current list of headers
+	 * @return headers
+	 */
+	public Map<String, String> getHeaders() {
+		return this.headers;
+	}
+	
+	/**
+	 * Sets the headers that will be sent with the request
+	 * @param headers The headers
+	 */
+	public void setHeaders(Map<String, String> headers) {
+		this.headers = headers;
 	}
 	
 	/**
@@ -157,6 +137,22 @@ public class HttpRequest {
 	}
 	
 	/**
+	 * Returns the current list of parameters
+	 * @return parameters
+	 */
+	public Map<String, String> getParameters() {
+		return this.parameters;
+	}
+	
+	/**
+	 * Sets the parameters that will be sent with the request
+	 * @param parameters The parameters
+	 */
+	public void setParameters(Map<String, String> parameters) {
+		this.parameters = parameters;
+	}
+	
+	/**
 	 * Adds a parameter to be sent
 	 * @param key The parameter's key
 	 * @param value The parameter's value
@@ -164,11 +160,35 @@ public class HttpRequest {
 	public void addParameter(String key, String value) {
 		this.parameters.put(key, value);
 	}
-
+	
+	/**
+	 * Removes a parameter
+	 * @param key The parameter's key
+	 */
+	public void removeParameter(String key) {
+		this.parameters.remove(key);
+	}
+	
 	/**
 	 * Returns the current list of cookies
+	 * @return cookies
+	 */
+	public List<Cookie> getCookies() {
+		return this.cookies;
+	}
+	
+	/**
+	 * Sets the cookies that will be sent with the request
+	 * @param cookies The cookies
+	 */
+	public void setCookies(List<Cookie> cookies) {
+		this.cookies = cookies;
+	}
+
+	/**
+	 * Returns a Cookie instance from its name
 	 * @param name The name of the cookie
-	 * @return Returns a List
+	 * @return The cookie
 	 */
 	public Cookie getCookie(String name) {
 		for(Cookie cookie : this.cookies) {
@@ -213,13 +233,5 @@ public class HttpRequest {
 			}
 		}
 		return false;
-	}
-	
-	/**
-	 * Sets the user agent to be sent in the next request
-	 * @param userAgent The user agent
-	 */
-	public void setUserAgent(UserAgent userAgent) {
-		this.userAgent = userAgent;
 	}
 }
