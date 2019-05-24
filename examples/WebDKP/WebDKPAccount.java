@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import anderson.henry.httpicnic.PicnicClient;
+import anderson.henry.httpicnic.http.HttpConnectionException;
 import anderson.henry.httpicnic.http.HttpResponse;
 
 /**
@@ -37,8 +38,9 @@ public class WebDKPAccount {
 	 * Logs into webdkp.com
 	 * Note: Before sending a POST request to login you must get an "authenticity token" from a form on the login page
 	 * @return a boolean representing whether the login was successful
+	 * @throws HttpConnectionException Thrown if the connection fails
 	 */ 
-	public boolean login() {
+	public boolean login() throws HttpConnectionException {
 		client.addParameter("siteUserEvent", "login");
 		client.addParameter("username", this.username);
 		client.addParameter("password", this.password);
@@ -49,8 +51,9 @@ public class WebDKPAccount {
 	/**
 	 * Creates WebDKPPlayer instances of each player in the table
 	 * The WebDKPAccount instance must be logged in before loading the players
+	 * @throws HttpConnectionException Thrown if the connection fails
 	 */
-	public void loadPlayers() {
+	public void loadPlayers() throws HttpConnectionException {
 		boolean keepLoading = true;
 		int page = 1;
 		while(keepLoading) {
@@ -82,8 +85,9 @@ public class WebDKPAccount {
 	 * @param reason The reason
 	 * @param awardedBy The person awarding the points
 	 * @param location Location the points are being awarded from
+	 * @throws HttpConnectionException Thrown if the connection fails
 	 */
-	public void addPoints(WebDKPPlayer player, int amount, String reason, String awardedBy, String location) {
+	public void addPoints(WebDKPPlayer player, int amount, String reason, String awardedBy, String location) throws HttpConnectionException {
 		String url = this.tableUrl.endsWith("/") ? this.tableUrl + "Admin/CreateAward/" : this.tableUrl + "/Admin/CreateAward/";
 		this.client.addParameter("ajax", "CreateAward");
 		this.client.addParameter("playerids", String.valueOf(player.getID()));
@@ -99,8 +103,9 @@ public class WebDKPAccount {
 	 * Creates a new WebDKP player
 	 * @param name The name of the player
 	 * @param amount The amount of points to add
+	 * @throws HttpConnectionException Thrown if the connection fails
 	 */
-	public void createPlayer(String name, int amount) {
+	public void createPlayer(String name, int amount) throws HttpConnectionException {
 		String url = this.tableUrl.endsWith("/") ? this.tableUrl + "Admin/Manage/" : this.tableUrl + "/Admin/Manage/";
 		this.client.addParameter("ajax", "AddPlayer");
 		this.client.addParameter("name", name);
