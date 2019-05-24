@@ -1,4 +1,4 @@
-package anderson.henry.httpicnic.utils;
+package org.henrya.httpicnic.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import anderson.henry.httpicnic.http.Cookie;
-import anderson.henry.httpicnic.http.HttpHeader;
+import org.henrya.httpicnic.http.Cookie;
+import org.henrya.httpicnic.http.HttpHeader;
 
 /**
  * @author Henry Anderson

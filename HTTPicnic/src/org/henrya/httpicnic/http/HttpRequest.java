@@ -1,11 +1,11 @@
-package anderson.henry.httpicnic.http;
+package org.henrya.httpicnic.http;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import anderson.henry.httpicnic.utils.PicnicUtils;
+import org.henrya.httpicnic.utils.PicnicUtils;
 
 /**
  * A class for sending HTTP requests

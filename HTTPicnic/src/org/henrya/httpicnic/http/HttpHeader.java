@@ -1,4 +1,4 @@
-package anderson.henry.httpicnic.http;
+package org.henrya.httpicnic.http;
 
 /**
  * Represents an HTTP header field

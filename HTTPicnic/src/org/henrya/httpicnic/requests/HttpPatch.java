@@ -1,4 +1,4 @@
-package anderson.henry.httpicnic.requests;
+package org.henrya.httpicnic.requests;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,10 +10,11 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-import anderson.henry.httpicnic.http.HttpConnectionException;
-import anderson.henry.httpicnic.http.HttpRequest;
-import anderson.henry.httpicnic.http.HttpResponse;
-import anderson.henry.httpicnic.utils.PicnicUtils;
+import org.henrya.httpicnic.http.HttpConnectionException;
+import org.henrya.httpicnic.http.HttpRequest;
+import org.henrya.httpicnic.http.HttpResponse;
+
+import org.henrya.httpicnic.utils.PicnicUtils;
 
 /**
  * A class for sending PATCH requests

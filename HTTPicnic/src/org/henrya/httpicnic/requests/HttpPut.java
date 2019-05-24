@@ -1,4 +1,4 @@
-package anderson.henry.httpicnic.requests;
+package org.henrya.httpicnic.requests;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,27 +10,28 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-import anderson.henry.httpicnic.http.HttpConnectionException;
-import anderson.henry.httpicnic.http.HttpRequest;
-import anderson.henry.httpicnic.http.HttpResponse;
-import anderson.henry.httpicnic.utils.PicnicUtils;
+import org.henrya.httpicnic.http.HttpConnectionException;
+import org.henrya.httpicnic.http.HttpRequest;
+import org.henrya.httpicnic.http.HttpResponse;
+
+import org.henrya.httpicnic.utils.PicnicUtils;
 
 /**
- * A class for sending DELETE requests
+ * A class for sending PUT requests
  * @author Henry Anderson
  */
-public class HttpDelete extends HttpRequest {
+public class HttpPut extends HttpRequest {
 
 	/**
-	 * Constructs a new DELETE request
-	 * @param url The URL the DELETE request will be sent to
+	 * Constructs a new PUT request
+	 * @param url The URL the PUT request will be sent to
 	 */
-	public HttpDelete(String url) {
+	public HttpPut(String url) {
 		super(url);
 	}
 
 	/**
-	 * Sends the HTTP DELETE request using new headers, new parameters, and new cookies
+	 * Sends the HTTP PUT request using new headers, new parameters, and new cookies
 	 * @param headers The headers
 	 * @param rawParams A String with the raw, unparsed parameters 
 	 * @param rawCookies A String with the raw, unparsed cookies
@@ -45,7 +46,7 @@ public class HttpDelete extends HttpRequest {
 		try {
 			urlObj = new URL(this.getURL());
 			conn = PicnicUtils.prepareConnection(urlObj, headers, rawCookies);
-			conn.setRequestMethod("DELETE");
+			conn.setRequestMethod("PUT");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

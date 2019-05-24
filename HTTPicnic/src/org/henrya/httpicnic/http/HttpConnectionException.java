@@ -1,4 +1,4 @@
-package anderson.henry.httpicnic.http;
+package org.henrya.httpicnic.http;
 
 /**
  * An exception that is thrown when there is a problem connecting to the server

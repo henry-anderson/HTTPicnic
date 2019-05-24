@@ -1,20 +1,20 @@
-package anderson.henry.httpicnic;
+package org.henrya.httpicnic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import anderson.henry.httpicnic.http.Cookie;
-import anderson.henry.httpicnic.http.HttpConnectionException;
-import anderson.henry.httpicnic.http.HttpHeader;
-import anderson.henry.httpicnic.http.HttpResponse;
-import anderson.henry.httpicnic.requests.HttpDelete;
-import anderson.henry.httpicnic.requests.HttpGet;
-import anderson.henry.httpicnic.requests.HttpHead;
-import anderson.henry.httpicnic.requests.HttpOptions;
-import anderson.henry.httpicnic.requests.HttpPost;
-import anderson.henry.httpicnic.requests.HttpPut;
+import org.henrya.httpicnic.http.Cookie;
+import org.henrya.httpicnic.http.HttpConnectionException;
+import org.henrya.httpicnic.http.HttpHeader;
+import org.henrya.httpicnic.http.HttpResponse;
+import org.henrya.httpicnic.requests.HttpDelete;
+import org.henrya.httpicnic.requests.HttpGet;
+import org.henrya.httpicnic.requests.HttpHead;
+import org.henrya.httpicnic.requests.HttpOptions;
+import org.henrya.httpicnic.requests.HttpPost;
+import org.henrya.httpicnic.requests.HttpPut;
 
 /**
  * A wrapper class for sending multiple HTTP requests and handling response cookies

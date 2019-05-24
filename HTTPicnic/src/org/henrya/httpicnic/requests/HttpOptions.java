@@ -1,33 +1,36 @@
-package anderson.henry.httpicnic.requests;
+package org.henrya.httpicnic.requests;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-import anderson.henry.httpicnic.http.HttpConnectionException;
-import anderson.henry.httpicnic.http.HttpRequest;
-import anderson.henry.httpicnic.http.HttpResponse;
-import anderson.henry.httpicnic.utils.PicnicUtils;
+import org.henrya.httpicnic.http.HttpConnectionException;
+import org.henrya.httpicnic.http.HttpRequest;
+import org.henrya.httpicnic.http.HttpResponse;
+
+import org.henrya.httpicnic.utils.PicnicUtils;
 
 /**
- * A class for sending HEAD requests
+ * A class that represents a OPTIONS request
  * @author Henry Anderson
  */
-public class HttpHead extends HttpRequest {
-	
+public class HttpOptions extends HttpRequest {
+
 	/**
-	 * Constructs a new HEAD request
-	 * @param url The URL the HEAD request will be sent to
+	 * Constructs a new OPTIONS request
+	 * @param url The URL the OPTIONS request will be sent to
 	 */
-	public HttpHead(String url) {
+	public HttpOptions(String url) {
 		super(url);
 	}
 	
 	/**
-	 * Sends the HTTP HEAD request using new headers, new parameters, and new cookies
+	 * Sends the HTTP OPTIONS request using new headers, new parameters, and new cookies
 	 * @param headers The headers
 	 * @param rawParams A String with the raw, unparsed parameters 
 	 * @param rawCookies A String with the raw, unparsed cookies
@@ -40,16 +43,17 @@ public class HttpHead extends HttpRequest {
 		int responseCode = -1;
 		String responseMessage = null;
 		try {
-			urlObj = new URL(this.getURL() + (rawParams != null && !rawParams.isEmpty() ? "?" + rawParams : ""));
+			urlObj = new URL(this.getURL());
 			conn = PicnicUtils.prepareConnection(urlObj, headers, rawCookies);
-			conn.setRequestMethod("HEAD");
+			conn.setRequestMethod("OPTIONS");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
 			responseCode = conn.getResponseCode();
 			responseMessage = conn.getResponseMessage();
-			return new HttpResponse(PicnicUtils.parseHeaders(conn.getHeaderFields()), PicnicUtils.parseCookies(conn.getHeaderFields()), null, responseCode, responseMessage);
+			String responseContent = PicnicUtils.parseContent(new BufferedReader(new InputStreamReader(conn.getInputStream())));
+			return new HttpResponse(PicnicUtils.parseHeaders(conn.getHeaderFields()), PicnicUtils.parseCookies(conn.getHeaderFields()), responseContent, responseCode, responseMessage);
 		} catch(ConnectException | UnknownHostException e) {
 			throw new HttpConnectionException(this.getURL(), e.getMessage());
 		} catch(IOException e) {
