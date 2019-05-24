@@ -16,7 +16,6 @@ Headers and parameters can then added to the request.
 
 <pre>
 HttpRequest request = new HttpRequest("http://example.com/login");
-request.setUserAgent(UserAgent.GOOGLE_CHROME);
 request.addHeader(HttpHeader.ACCEPT, "text/html");
 request.addParameter("username", "henry");
 request.addParameter("password", "password123");
