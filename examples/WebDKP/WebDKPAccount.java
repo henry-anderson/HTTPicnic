@@ -1,13 +1,13 @@
-package anderson.henry.httppicnic.examples.webdkp;
+package org.henrya.httpicnic.examples.webdkp;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
 
-import anderson.henry.httpicnic.PicnicClient;
-import anderson.henry.httpicnic.http.HttpConnectionException;
-import anderson.henry.httpicnic.http.HttpResponse;
+import org.henrya.httpicnic.PicnicClient;
+import org.henrya.httpicnic.http.HttpConnectionException;
+import org.henrya.httpicnic.http.HttpResponse;
 
 /**
  * This class is referencing an account on https://webdkp.com

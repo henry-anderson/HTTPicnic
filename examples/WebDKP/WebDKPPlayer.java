@@ -1,4 +1,4 @@
-package anderson.henry.httppicnic.examples.webdkp;
+package org.henrya.httpicnic.examples.webdkp;
 
 public class WebDKPPlayer {
 	private String name;

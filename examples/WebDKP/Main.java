@@ -1,6 +1,6 @@
-package anderson.henry.httppicnic.examples.webdkp;
+package org.henrya.httpicnic.examples.webdkp;
 
-import anderson.henry.httpicnic.http.HttpConnectionException;
+import org.henrya.httpicnic.http.HttpConnectionException;
 
 public class Main {
 	
