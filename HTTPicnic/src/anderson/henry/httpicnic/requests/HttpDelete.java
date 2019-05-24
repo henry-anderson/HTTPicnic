@@ -16,21 +16,21 @@ import anderson.henry.httpicnic.http.HttpResponse;
 import anderson.henry.httpicnic.utils.PicnicUtils;
 
 /**
- * A class for sending POST requests
+ * A class for sending DELETE requests
  * @author Henry Anderson
  */
-public class HttpPost extends HttpRequest {
+public class HttpDelete extends HttpRequest {
 
 	/**
-	 * Constructs a new POST request
-	 * @param url The URL the POST request will be sent to
+	 * Constructs a new DELETE request
+	 * @param url The URL the DELETE request will be sent to
 	 */
-	public HttpPost(String url) {
+	public HttpDelete(String url) {
 		super(url);
 	}
 
 	/**
-	 * Sends the HTTP POST request using new headers, new parameters, and new cookies
+	 * Sends the HTTP DELETE request using new headers, new parameters, and new cookies
 	 * @param headers The headers
 	 * @param rawParams A String with the raw, unparsed parameters 
 	 * @param rawCookies A String with the raw, unparsed cookies
@@ -45,7 +45,7 @@ public class HttpPost extends HttpRequest {
 		try {
 			urlObj = new URL(this.getURL());
 			conn = PicnicUtils.prepareConnection(urlObj, headers, rawCookies);
-			conn.setRequestMethod("POST");
+			conn.setRequestMethod("DELETE");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

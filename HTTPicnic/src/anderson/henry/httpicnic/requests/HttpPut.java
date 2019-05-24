@@ -16,21 +16,21 @@ import anderson.henry.httpicnic.http.HttpResponse;
 import anderson.henry.httpicnic.utils.PicnicUtils;
 
 /**
- * A class for sending POST requests
+ * A class for sending PUT requests
  * @author Henry Anderson
  */
-public class HttpPost extends HttpRequest {
+public class HttpPut extends HttpRequest {
 
 	/**
-	 * Constructs a new POST request
-	 * @param url The URL the POST request will be sent to
+	 * Constructs a new PUT request
+	 * @param url The URL the PUT request will be sent to
 	 */
-	public HttpPost(String url) {
+	public HttpPut(String url) {
 		super(url);
 	}
 
 	/**
-	 * Sends the HTTP POST request using new headers, new parameters, and new cookies
+	 * Sends the HTTP PUT request using new headers, new parameters, and new cookies
 	 * @param headers The headers
 	 * @param rawParams A String with the raw, unparsed parameters 
 	 * @param rawCookies A String with the raw, unparsed cookies
@@ -45,7 +45,7 @@ public class HttpPost extends HttpRequest {
 		try {
 			urlObj = new URL(this.getURL());
 			conn = PicnicUtils.prepareConnection(urlObj, headers, rawCookies);
-			conn.setRequestMethod("POST");
+			conn.setRequestMethod("PUT");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -9,9 +9,12 @@ import anderson.henry.httpicnic.http.Cookie;
 import anderson.henry.httpicnic.http.HttpConnectionException;
 import anderson.henry.httpicnic.http.HttpHeader;
 import anderson.henry.httpicnic.http.HttpResponse;
+import anderson.henry.httpicnic.requests.HttpDelete;
 import anderson.henry.httpicnic.requests.HttpGet;
 import anderson.henry.httpicnic.requests.HttpHead;
+import anderson.henry.httpicnic.requests.HttpOptions;
 import anderson.henry.httpicnic.requests.HttpPost;
+import anderson.henry.httpicnic.requests.HttpPut;
 
 /**
  * A wrapper class for sending multiple HTTP requests and handling response cookies
@@ -23,9 +26,24 @@ public class PicnicClient {
 	private List<Cookie> cookies = new ArrayList<Cookie>();
 	
 	/**
+	 * Sends a DELETE request to the URL using the current headers, parameters, and cookies
+	 * @param url The URL to send the request
+	 * @return Returns a HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
+	 */
+	public HttpResponse sendDELETE(String url) throws HttpConnectionException {
+		HttpDelete request = new HttpDelete(url);
+		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
+		this.addNewCookies(response.getCookies());
+		this.parameters.clear();
+		return response;
+	}
+	
+	/**
 	 * Sends a GET request to the URL using the current headers, parameters, and cookies
 	 * @param url The URL to send the request
 	 * @return Returns a HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
 	 */
 	public HttpResponse sendGET(String url) throws HttpConnectionException {
 		HttpGet request = new HttpGet(url);
@@ -39,6 +57,7 @@ public class PicnicClient {
 	 * Sends a HEAD request to the URL using the current headers, parameters, and cookies
 	 * @param url The URL to send the request
 	 * @return Returns a HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
 	 */
 	public HttpResponse sendHEAD(String url) throws HttpConnectionException {
 		HttpHead request = new HttpHead(url);
@@ -49,12 +68,41 @@ public class PicnicClient {
 	}
 	
 	/**
+	 * Sends a OPTIONS request to the URL using the current headers, parameters, and cookies
+	 * @param url The URL to send the request
+	 * @return Returns a HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
+	 */
+	public HttpResponse sendOPTIONS(String url) throws HttpConnectionException {
+		HttpOptions request = new HttpOptions(url);
+		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
+		this.addNewCookies(response.getCookies());
+		this.parameters.clear();
+		return response;
+	}
+	
+	/**
 	 * Sends a POST request to the URL using the current headers, parameters, and cookies
 	 * @param url The URL to send the request
 	 * @return Returns a HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
 	 */
 	public HttpResponse sendPOST(String url) throws HttpConnectionException{
 		HttpPost request = new HttpPost(url);
+		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
+		this.addNewCookies(response.getCookies());
+		this.parameters.clear();
+		return response;
+	}
+	
+	/**
+	 * Sends a PUT request to the URL using the current headers, parameters, and cookies
+	 * @param url The URL to send the request
+	 * @return Returns a HttpResponse instance
+	 * @throws HttpConnectionException When the connection fails
+	 */
+	public HttpResponse sendPUT(String url) throws HttpConnectionException{
+		HttpPut request = new HttpPut(url);
 		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
 		this.addNewCookies(response.getCookies());
 		this.parameters.clear();

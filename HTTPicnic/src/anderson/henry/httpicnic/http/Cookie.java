@@ -2,6 +2,7 @@ package anderson.henry.httpicnic.http;
 
 /**
  * Represents an HTTP cookie
+ * @author Henry Anderson
  */
 public class Cookie {
 	private String raw;
@@ -25,6 +26,7 @@ public class Cookie {
 	}
 	
 	/**
+	 * Parses a cookie represented by a string
 	 * @param raw The raw, unparsed cookie
 	 */
 	public Cookie(String raw) {

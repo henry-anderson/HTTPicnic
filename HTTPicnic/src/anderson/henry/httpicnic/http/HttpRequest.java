@@ -37,8 +37,8 @@ public abstract class HttpRequest {
 	/**
 	 * Sends the HTTP request using new headers, new parameters, and new cookies
 	 * @param headers The headers
-	 * @param rawParams The parameters
-	 * @param rawCookies The cookies
+	 * @param parameters The parameters
+	 * @param cookies The cookies
 	 * @return An HttpResponse instance
 	 * @throws HttpConnectionException When the connection fails
 	 */

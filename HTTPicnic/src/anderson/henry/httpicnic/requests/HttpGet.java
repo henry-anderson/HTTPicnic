@@ -29,7 +29,7 @@ public class HttpGet extends HttpRequest {
 	}
 	
 	/**
-	 * Sends the HTTP POST request using new headers, new parameters, and new cookies
+	 * Sends the HTTP GET request using new headers, new parameters, and new cookies
 	 * @param headers The headers
 	 * @param rawParams A String with the raw, unparsed parameters 
 	 * @param rawCookies A String with the raw, unparsed cookies
