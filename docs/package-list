@@ -1,3 +1,4 @@
-anderson.henry.httpicnic
-anderson.henry.httpicnic.http
-anderson.henry.httpicnic.requests
+org.henrya.httpicnic
+org.henrya.httpicnic.http
+org.henrya.httpicnic.requests
+org.henrya.httpicnic.utils
