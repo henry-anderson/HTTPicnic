@@ -4,20 +4,18 @@ HTTPicnic is a Java library that greatly simplifies the process of sending HTTP 
 [View the Javadocs here](https://henry-anderson.github.io/HTTPicnic/)
 
 <h3>HttpRequest</h3>
-The HttpRequest class is used to send basic HTTP requests. Currently only POST, GET, and HEAD requests are supported.
-
-
-When creating a new HttpRequest instance, the URL that the request will be sent to is defined in the constructor.
+The HttpRequest class is an abstract class that is used to send basic HTTP requests. Currently only POST, GET, and HEAD requests are supported.
+<br /> 
+When creating a new request, the URL that the request will be sent to is defined in the constructor.
 
 <pre>
-HttpRequest request = new HttpRequest("https://example.com/login");
+HttpRequest request = new HttpPost("https://example.com/login");
 </pre>
 
 Headers and parameters can then added to the request.
 
 <pre>
 HttpRequest request = new HttpRequest("http://example.com/login");
-request.setUserAgent(UserAgent.GOOGLE_CHROME);
 request.addHeader(HttpHeader.ACCEPT, "text/html");
 request.addParameter("username", "henry");
 request.addParameter("password", "password123");
