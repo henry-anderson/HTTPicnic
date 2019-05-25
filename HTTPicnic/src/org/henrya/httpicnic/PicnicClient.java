@@ -8,107 +8,39 @@ import java.util.Map;
 import org.henrya.httpicnic.http.Cookie;
 import org.henrya.httpicnic.http.HttpConnectionException;
 import org.henrya.httpicnic.http.HttpHeader;
+import org.henrya.httpicnic.http.HttpRequest;
 import org.henrya.httpicnic.http.HttpResponse;
-import org.henrya.httpicnic.requests.HttpDelete;
-import org.henrya.httpicnic.requests.HttpGet;
-import org.henrya.httpicnic.requests.HttpHead;
-import org.henrya.httpicnic.requests.HttpOptions;
-import org.henrya.httpicnic.requests.HttpPost;
-import org.henrya.httpicnic.requests.HttpPut;
 
 /**
  * A wrapper class for sending multiple HTTP requests and handling response cookies
+ * Cookies from each request are stored and sent with the next request
  * @author Henry Anderson
  */
 public class PicnicClient {
 	private Map<String, String> headers = new HashMap<String, String>();
 	private Map<String, String> parameters = new HashMap<String, String>();
 	private List<Cookie> cookies = new ArrayList<Cookie>();
+	private boolean followRedirects = false;
 	
 	/**
-	 * Sends a DELETE request to the URL using the current headers, parameters, and cookies
-	 * @param url The URL to send the request
+	 * Sends an HTTP request using the current headers, parameters, and cookies
+	 * Any headers, parameters, or cookies added directly to the HttpRequest instance will not be used 
+	 * If follow redirects is true the last HttpResponse instance will be returned
+	 * @param request The request to be sent
 	 * @return Returns a HttpResponse instance
 	 * @throws HttpConnectionException When the connection fails
 	 */
-	public HttpResponse sendDELETE(String url) throws HttpConnectionException {
-		HttpDelete request = new HttpDelete(url);
+	public HttpResponse send(HttpRequest request) throws HttpConnectionException {
 		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
 		this.addNewCookies(response.getCookies());
 		this.parameters.clear();
+		if(this.followRedirects && response.containsHeader(HttpHeader.LOCATION)) {
+			request.setURL(response.getHeaderValue(HttpHeader.LOCATION));
+			return this.send(request);
+		}
 		return response;
 	}
-	
-	/**
-	 * Sends a GET request to the URL using the current headers, parameters, and cookies
-	 * @param url The URL to send the request
-	 * @return Returns a HttpResponse instance
-	 * @throws HttpConnectionException When the connection fails
-	 */
-	public HttpResponse sendGET(String url) throws HttpConnectionException {
-		HttpGet request = new HttpGet(url);
-		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
-		this.addNewCookies(response.getCookies());
-		this.parameters.clear();
-		return response;
-	}
-	
-	/**
-	 * Sends a HEAD request to the URL using the current headers, parameters, and cookies
-	 * @param url The URL to send the request
-	 * @return Returns a HttpResponse instance
-	 * @throws HttpConnectionException When the connection fails
-	 */
-	public HttpResponse sendHEAD(String url) throws HttpConnectionException {
-		HttpHead request = new HttpHead(url);
-		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
-		this.addNewCookies(response.getCookies());
-		this.parameters.clear();
-		return response;
-	}
-	
-	/**
-	 * Sends a OPTIONS request to the URL using the current headers, parameters, and cookies
-	 * @param url The URL to send the request
-	 * @return Returns a HttpResponse instance
-	 * @throws HttpConnectionException When the connection fails
-	 */
-	public HttpResponse sendOPTIONS(String url) throws HttpConnectionException {
-		HttpOptions request = new HttpOptions(url);
-		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
-		this.addNewCookies(response.getCookies());
-		this.parameters.clear();
-		return response;
-	}
-	
-	/**
-	 * Sends a POST request to the URL using the current headers, parameters, and cookies
-	 * @param url The URL to send the request
-	 * @return Returns a HttpResponse instance
-	 * @throws HttpConnectionException When the connection fails
-	 */
-	public HttpResponse sendPOST(String url) throws HttpConnectionException{
-		HttpPost request = new HttpPost(url);
-		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
-		this.addNewCookies(response.getCookies());
-		this.parameters.clear();
-		return response;
-	}
-	
-	/**
-	 * Sends a PUT request to the URL using the current headers, parameters, and cookies
-	 * @param url The URL to send the request
-	 * @return Returns a HttpResponse instance
-	 * @throws HttpConnectionException When the connection fails
-	 */
-	public HttpResponse sendPUT(String url) throws HttpConnectionException{
-		HttpPut request = new HttpPut(url);
-		HttpResponse response =  request.send(this.headers, this.parameters, this.cookies);
-		this.addNewCookies(response.getCookies());
-		this.parameters.clear();
-		return response;
-	}
-	
+
 	/**
 	 * Returns the current list of headers
 	 * @return headers
@@ -307,5 +239,21 @@ public class PicnicClient {
 				this.cookies.add(cookie);
 			}
 		}
+	}
+	
+	/**
+	 * Returns whether the client will follow redirects
+	 * @return A boolean
+	 */
+	public boolean getFollowRedirects() {
+		return this.followRedirects;
+	}
+	
+	/**
+	 * If true the client will follow HTTP redirects (response code 3xx)
+	 * @param followRedirects Whether redirects should be followed
+	 */
+	public void setFollowRedirects(boolean followRedirects) {
+		this.followRedirects = followRedirects;
 	}
 }
