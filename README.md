@@ -1,3 +1,5 @@
+[![Maven](https://maven-badges.herokuapp.com/maven-central/org.henrya/httpicnic/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.henrya/httpicnic)
+
 # HTTPicnic
 HTTPicnic is a Java library that greatly simplifies the process of sending HTTP requests and handling their responses.
 
