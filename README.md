@@ -6,7 +6,16 @@ HTTPicnic is a Java library that greatly simplifies the process of sending HTTP 
 
 [View the Javadocs here](https://henry-anderson.github.io/HTTPicnic/)
 
-<h3>HttpRequest</h3>
+## Maven
+```xml
+<dependency>
+  <groupId>org.henrya</groupId>
+  <artifactId>httpicnic</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+### HttpRequest
 The HttpRequest class is an abstract class that is used to send basic HTTP requests.
 
 When creating a new request, the URL that the request will be sent to is defined in the constructor.
@@ -28,7 +37,7 @@ System.out.println(response.getContent();
 
 The HttpResponse object contains all the data that the web server replied with.
 
-<h3>PicnicClient</h3>
+### PicnicClient
 The PicnicClient class is used to send multiple HTTP requests. It handles the cookies from each request and is useful in cases where cookies need to be stored and sent in every request.
 
 <pre>
