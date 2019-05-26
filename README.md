@@ -1,6 +1,6 @@
 # HTTPicnic
 
-<a href="http://repo1.maven.org/maven2/org/henrya/httpicnic/"><img src="https://img.shields.io/maven-metadata/v/https/repo1.maven.org/maven2/org/henrya/httpicnic/maven-metadata.xml.svg?label=Maven"></a> <a href="https://github.com/henry-anderson/HTTPicnic/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+<a href="http://repo1.maven.org/maven2/org/henrya/httpicnic/"><img src="https://img.shields.io/maven-metadata/v/https/repo1.maven.org/maven2/org/henrya/httpicnic/maven-metadata.xml.svg?label=maven"></a> <a href="https://github.com/henry-anderson/HTTPicnic/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
 
 HTTPicnic is a Java library that greatly simplifies the process of sending HTTP requests and handling their responses.
 
