@@ -11,7 +11,7 @@ HTTPicnic is a Java library that greatly simplifies the process of sending HTTP 
 <dependency>
   <groupId>org.henrya</groupId>
   <artifactId>httpicnic</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
